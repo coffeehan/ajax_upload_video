@@ -20,7 +20,7 @@ public class VideoController extends JbootController {
     	//String path = getRequest().getSession().getServletContext().getRealPath("/");
     	String type = filename.substring(filename.lastIndexOf("."));
 		filename = System.currentTimeMillis() + type;
-		String videofile = "E:/svell2019/tmp/" + filename;
+		String videofile = "/tmp/" + filename;
 		file.renameTo(new File(videofile));
 		renderText("ok:"+filename);
     }
