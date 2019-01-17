@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML5 GetUserMedia Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+</head>
+<body>
+<p><input id="capture" type="file" accept="video/*" capture="user" onchange="startCapture()" /></p>
+<p><video id="video" width="300" height="300" autoplay></video></p>
+
+<script src="js/jquery-1.6.2.js"></script>
+<script>
+function startCapture() {
+	var file = document.getElementById('capture').files[0];
+	var file_size = (Math.round(file.size / 1024)).toFixed();
+	var url = window.URL.createObjectURL(file);
+	document.getElementById("video").src = url;
+	
+	upload_video(file);
+}
+function upload_video(file){
+	var formData = new FormData();
+	formData.append('file', file);
+	$.ajax({
+		url: '/upload_video.php',
+		type: 'POST',
+		cache: false,
+		data: formData,
+		processData: false,
+		contentType: false
+	}).done(function(res) {
+		alert("done:" + res);
+	}).fail(function(res) {
+		alert("fail:" + res);
+	});
+}
+</script>
+</body>
+</html>
